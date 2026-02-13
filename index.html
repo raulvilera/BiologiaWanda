@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade Diagnóstica · Biologia · ENEM</title>
+
+    <!-- Google Fonts & Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #d9dfe8;
+            background-image: radial-gradient(circle at 10% 30%, #f1f5fa 0%, #cbd5e1 100%);
+            padding: 35px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 245, 0.9);
+            backdrop-filter: blur(2px);
+            /* Reduced blur for performance */
+            -webkit-backdrop-filter: blur(2px);
+            border-radius: 48px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            /* Lighter shadow */
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 220, 0.5);
+            will-change: transform;
+            /* Hardware acceleration hint */
+        }
+
+        /* ----- CABEÇALHO ESCOLA – relevo, sombras ----- */
+        .cabecalho-escola {
+            background: #0c3e2b;
+            background: linear-gradient(165deg, #0a3524, #15533b);
+            color: white;
+            padding: 28px 32px;
+            border-radius: 32px 32px 32px 32px;
+            box-shadow: 0 12px 0 #062016, 0 18px 30px #00000035;
+            border-bottom: 4px solid #b8e6b0;
+            margin-bottom: 6mm;
+        }
+
+        .cabecalho-escola h1 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 3px 3px 0 #06281e, 1px 1px 10px #adf7b2;
+        }
+
+        .cabecalho-escola h2 {
+            font-size: 1.55rem;
+            font-weight: 600;
+            border-top: 3px solid #b3ffb3;
+            border-bottom: 3px solid #b3ffb3;
+            display: inline-block;
+            padding: 10px 30px;
+            margin-top: 12px;
+            background: #1d4e3daa;
+            border-radius: 60px;
+            backdrop-filter: blur(8px);
+            box-shadow: inset 0 0 6px white;
+        }
+
+        /* Área aluno – dropdown + dados automáticos */
+        .linha-aluno {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 24px;
+            margin-top: 28px;
+            background: #fffef0;
+            padding: 18px 28px;
+            border-radius: 80px;
+            color: #14362c;
+            font-weight: 600;
+            border: 2px solid #b4d9c2;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05), 0 8px 0 #597a6a;
+        }
+
+        .select-aluno {
+            flex: 2;
+            padding: 14px 22px;
+            border-radius: 60px;
+            border: 3px solid #146b4c;
+            background: white;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            outline: none;
+            box-shadow: inset 0 3px 8px #b3b3b3;
+            transition: 0.1s;
+        }
+
+        .select-aluno:focus {
+            border-color: #05402e;
+            box-shadow: 0 0 0 4px #9fdfb2;
+        }
+
+        .info-aluno {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            background: #e2ffd6;
+            padding: 6px 25px;
+            border-radius: 50px;
+            color: #0a3524;
+        }
+
+        .info-aluno span {
+            background: #1e4e3a;
+            color: white;
+            padding: 7px 20px;
+            border-radius: 40px;
+            font-size: 0.96rem;
+            font-weight: 500;
+            box-shadow: inset 0 -2px 0 #a0d8b0;
+        }
+
+        .email-inst {
+            background: #264e40 !important;
+            font-family: monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .espaco-5mm {
+            height: 5mm;
+            width: 100%;
+            background: transparent;
+        }
+
+        /* ---------- CARTÕES DAS QUESTÕES – ALTO RELEVO, SOMBRA LATERAL ESQUERDA ---------- */
+        .questao-card {
+            background: #fffcf0;
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 35px;
+            box-shadow: -8px 8px 0 rgba(121, 142, 124, 0.3);
+            /* Simplified shadow */
+            border: 1px solid #ebf5df;
+            transition: transform 0.2s ease;
+            position: relative;
+            will-change: transform;
+        }
+
+        .numero-questao {
+            display: inline-block;
+            background: #1f543e;
+            color: white;
+            font-weight: 700;
+            padding: 10px 28px;
+            border-radius: 60px;
+            font-size: 1.25rem;
+            margin-bottom: 22px;
+            box-shadow: 0 6px 0 #0f3024, 0 8px 12px #00000025;
+            border-bottom: 2px solid #c3f7b0;
+        }
+
+        .enunciado {
+            font-size: 1.1rem;
+            line-height: 1.65;
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #1d352c;
+            background: #fafce9;
+            padding: 16px 22px;
+            border-radius: 24px;
+            border-left: 12px solid #2f7a5a;
+            box-shadow: inset 0 2px 6px #cfcfb0;
+        }
+
+        /* TAG IMAGEM – centralizada e com dimensões padronizadas */
+        .tag-imagem {
+            background: #ddeede;
+            padding: 22px 24px;
+            border-radius: 24px;
+            margin: 20px 0 28px;
+            border: 3px dashed #3c705b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+            color: #154734;
+            font-weight: 700;
+            font-size: 1.05rem;
+            box-shadow: inset 0 0 0 2px #fefefe, inset 0 0 12px #acc9b3;
+        }
+
+        .tag-imagem i {
+            font-size: 2.8rem;
+            color: #1c6046;
+            text-shadow: 3px 3px 0 #cef0d0;
+        }
+
+        /* Imagens dentro da tag – centralizadas e com tamanho uniforme */
+        .tag-imagem img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            /* todas as imagens terão no máximo 300px de altura */
+            width: auto;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 40, 20, 0.3);
+            margin: 0 auto;
+        }
+
+        /* alternativas multipla escolha */
+        .alternativas {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .opcao {
+            background: #f7faf3;
+            padding: 14px 25px;
+            border-radius: 20px;
+            border: 2px solid #c2d9cb;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.06rem;
+            box-shadow: 0 4px 0 #8ba296;
+            cursor: pointer;
+            transition: 0.08s;
+            font-weight: 500;
+        }
+
+        .opcao:hover {
+            background: #dff3e3;
+            border-color: #3a785b;
+        }
+
+        .opcao.selecionada {
+            background: #0f4a34 !important;
+            color: white !important;
+            border: 2px solid #002f1f;
+            box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.3), inset 0 0 0 3px #a0dbb0;
+            transform: translateY(5px);
+            border-color: #0a3a2a;
+        }
+
+        .opcao.selecionada i {
+            color: #dafadc;
+        }
+
+        .opcao i {
+            width: 28px;
+            text-align: center;
+            font-size: 1.4rem;
+            color: #2b7359;
+        }
+
+        /* Área discursiva */
+        .discursiva-area {
+            width: 100%;
+            margin-top: 18px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 22px;
+            border-radius: 28px;
+            border: 4px solid #b6d5c2;
+            font-size: 1.05rem;
+            resize: vertical;
+            background: #fffef9;
+            box-shadow: inset 0 4px 12px #b8cfc0;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+        }
+
+        textarea:focus {
+            border-color: #1b7a53;
+            outline: none;
+            background: #fffffc;
+        }
+
+        .btn-enviar {
+            background: #1a4e3a;
+            border: none;
+            color: white;
+            padding: 20px 48px;
+            font-size: 1.7rem;
+            font-weight: 800;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin: 40px auto 20px;
+            box-shadow: 0 16px 0 #0d3026, 0 18px 35px black;
+            transition: 0.06s linear;
+            cursor: pointer;
+            border: 2px solid #b3f0b3;
+            width: fit-content;
+        }
+
+        .btn-enviar:active {
+            box-shadow: 0 7px 0 #0d3026;
+            transform: translateY(9px);
+        }
+
+        .rodape-msg {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1e4d3a;
+        }
+
+        /* Ajustes responsivos */
+        @media (max-width: 700px) {
+            .main-container {
+                padding: 25px;
+            }
+
+            .cabecalho-escola h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+
+        <!-- CABEÇALHO OFICIAL WANDA MASCAGNI DE SÁ -->
+        <div class="cabecalho-escola">
+            <h1>E.E. PROFª WANDA MASCAGNI DE SÁ</h1>
+            <h2>ATIVIDADE DE BIOLOGIA (DIAGNÓSTICA) 1°BIMESTRE</h2>
+
+            <!-- DADOS DO ALUNO: DROPDOWN + PREENCHIMENTO AUTOMÁTICO -->
+            <div class="linha-aluno">
+                <select id="alunoSelect" class="select-aluno" onchange="carregarDadosAluno()">
+                    <option value="">-- SELECIONE SEU NOME (LISTA OFICIAL) --</option>
+                </select>
+                <div id="infoAlunoContainer" class="info-aluno">
+                    <span id="campoNumero">N°: --</span>
+                    <span id="campoSerie">SÉRIE: 2ª A</span>
+                    <span id="campoData">DATA: 12/02/2026</span>
+                    <span id="campoEmail" class="email-inst"><i class="fas fa-envelope"></i> e-mail institucional</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESPAÇAMENTO DE 5mm EXATO -->
+        <div class="espaco-5mm"></div>
+
+        <!-- 
+        ====================================================================
+        QUESTÕES HIPERCONTEXTUALIZADAS – ENEM
+        Foco nos menores percentuais: 
+          - 1.3 Ciclos biogeoquímicos (água, C, N) – 37% 
+          - 1.9 Alternativas energéticas / ecossistemas – 42,6%
+          - 2.6 Metabolismo energético (fotossíntese, respiração, fermentação) – 44,4%
+          - 4.2 Fisiologia humana/drogas/sistemas – 37%
+        ====================================================================
+    -->
+
+        <!-- Q1 · MÚLTIPLA ESCOLHA · CICLO DO NITROGÊNIO -->
+        <div class="questao-card" data-questao="1" data-tipo="me" data-gabarito="C" data-descritor="1.3">
+            <div class="numero-questao"><i class="fas fa-water"></i> QUESTÃO 01 · CICLOS BIOGEOQ.</div>
+            <div class="enunciado">
+                <strong>🌽 Lixiviação no Cerrado</strong> – Em uma fazenda produtora de milho no oeste baiano, foram
+                aplicadas 150 kg/ha de ureia no solo. Após fortes chuvas de janeiro, análises da água do córrego
+                adjacente indicaram elevada concentração de nitrato (35 mg/L). O fenômeno responsável por esse
+                transporte e seu impacto direto nos ecossistemas aquáticos são, respectivamente:
+            </div>
+            <div class="tag-imagem">
+                <i class="fas fa-chart-bar"></i> [GRÁFICO] Teor de nitrato no solo e na água após precipitação – pico
+                evidente no 5º dia.
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEivOT-JBKTXnX4qJTabBsWc8V0ws13YKI3WAZs-ay0JjlkjAOQVB4Z2yYg4tC0oEiNisY68BW2lzH4SscBeAUD6cS_b3lA4iGTF2ppgZAloFmGM9AGS9QLbcYCJdfUUV2fVOs6iGE_hRFsPSHvs_2lNHeUBpd7K0HhUGRZWfG3SX72Kf-BCGr6TtUulBBfz/s600/Capturar.PNG"
+                    alt="Gráfico de nitrato">
+            </div>
+            <div class="alternativas" id="alt1">
+                <div class="opcao" onclick="selecionarAlternativa(this, 1, 'A')"><i class="far fa-circle"></i> A)
+                    volatilização da amônia – chuva ácida.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 1, 'B')"><i class="far fa-circle"></i> B)
+                    fixação biológica – proliferação de cianobactérias.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 1, 'C')"><i class="far fa-circle"></i> C)
+                    lixiviação de nitrato – eutrofização e mortandade de peixes.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 1, 'D')"><i class="far fa-circle"></i> D)
+                    desnitrificação – emissão de N₂O.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 1, 'E')"><i class="far fa-circle"></i> E)
+                    imobilização microbiana – acidificação do solo.</div>
+            </div>
+        </div>
+
+        <!-- Q2 · MÚLTIPLA · FOTOSSÍNTESE X RESPIRAÇÃO -->
+        <div class="questao-card" data-questao="2" data-tipo="me" data-gabarito="A" data-descritor="2.6">
+            <div class="numero-questao"><i class="fas fa-leaf"></i> QUESTÃO 02 · METABOLISMO</div>
+            <div class="enunciado">
+                <strong>🧪 Experimento de Sachs (adaptado)</strong> – Folhas de planta de soja foram mantidas no escuro
+                por 48h, depois uma área foliar foi exposta à luz e outra coberta. Aplicou-se solução de iodo. A região
+                iluminada ficou azul-escura. O resultado evidencia que:
+            </div>
+            <div class="tag-imagem">
+                <i class="fas fa-flask"></i> [SIMULADOR INTERATIVO] Folha recoberta por papel alumínio: teste de amido
+                negativo; exposta: positivo.
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhKrmxie7GZENCAXZnSrqn-hjgAhE-EmRcF7nvRm9DVJx_K6ncEy8PRTVgISDulKAQDUUxaySCfj0BT-4q91RXLhyiMkAB7Mfbqjgd97HsHtAwRiVw6eVROuwR7eqYOiQZ0ypxEUyq9G04XEaY2kqo7OrJADFPvP-lsjbLv3XKjCZ1U465ItgDK5nDjULcY/s1536/ChatGPT%20Image%2012%20de%20fev.%20de%202026,%2010_39_40.png"
+                    alt="Experimento de Sachs">
+            </div>
+            <div class="alternativas">
+                <div class="opcao" onclick="selecionarAlternativa(this, 2, 'A')"><i class="far fa-circle"></i> A) a
+                    fotossíntese produz amido, consumindo gás carbônico e água na presença de luz.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 2, 'B')"><i class="far fa-circle"></i> B) a
+                    respiração celular é mais intensa no escuro, consumindo amido.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 2, 'C')"><i class="far fa-circle"></i> C) a
+                    planta realiza quimiossíntese durante a noite.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 2, 'D')"><i class="far fa-circle"></i> D) o
+                    amido é transportado das raízes para as folhas.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 2, 'E')"><i class="far fa-circle"></i> E) a
+                    clorofila atua como aceptor de elétrons na fotólise da água.</div>
+            </div>
+        </div>
+
+        <!-- Q3 · MULTIPLA · FISIOLOGIA HUMANA / DROGAS -->
+        <div class="questao-card" data-questao="3" data-tipo="me" data-gabarito="D" data-descritor="4.2">
+            <div class="numero-questao"><i class="fas fa-brain"></i> QUESTÃO 03 · FISIOLOGIA</div>
+            <div class="enunciado">
+                <strong>🧠 Crack e dopamina</strong> – A dependência do crack está relacionada ao aumento abrupto de
+                dopamina na fenda sináptica, pois a droga bloqueia a proteína transportadora responsável pela recaptação
+                desse neurotransmissor. A longo prazo, o cérebro reduz os receptores pós-sinápticos. Esse fenômeno
+                adaptativo é denominado:
+            </div>
+            <div class="tag-imagem">
+                <i class="fas fa-dna"></i> [INFOGRAFICO] Sinapse: vesículas de dopamina, recaptadores inibidos pelo
+                crack, poucos receptores disponíveis.
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0kLoFDVykcwo7KJKPN3KJtrKcLGPCsjFLcZvNClBI5M_u3Zw-cMZg4YUi4cY_CikwIKCaLpxWWuNMAe_z2dn4eVOewlEUJz4WUgQDJWsme9AEimFYpGbdqeCjHsMrpbYj7ljDpOF7Y4Ix8dZ2rhsSYNkJJg-p-xACHqbvzVPAE0EO6SUELSCXMF41yu4H/s600/ChatGPT%20Image%2012%20de%20fev.%20de%202026,%2016_34_57.png"
+                    alt="Sinapse e crack">
+            </div>
+            <div class="alternativas">
+                <div class="opcao" onclick="selecionarAlternativa(this, 3, 'A')"><i class="far fa-circle"></i> A)
+                    sensibilização neural.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 3, 'B')"><i class="far fa-circle"></i> B)
+                    potencialização de longa duração.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 3, 'C')"><i class="far fa-circle"></i> C)
+                    mielinização excessiva.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 3, 'D')"><i class="far fa-circle"></i> D)
+                    downregulation (dessensibilização) de receptores.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 3, 'E')"><i class="far fa-circle"></i> E)
+                    degeneração Walleriana.</div>
+            </div>
+        </div>
+
+        <!-- Q4 · MULTIPLA · ALTERNATIVAS ENERGÉTICAS -->
+        <div class="questao-card" data-questao="4" data-tipo="me" data-gabarito="B" data-descritor="1.9">
+            <div class="numero-questao"><i class="fas fa-wind"></i> QUESTÃO 04 · ENERGIA E ECOLOGIA</div>
+            <div class="enunciado">
+                <strong>🌬️ Complexo Eólico de Osório (RS)</strong> – O parque eólico com 75 aerogeradores evita emissão
+                de 600 mil toneladas de CO₂/ano. No entanto, estudos apontam colisão de aves migratórias. Qual
+                estratégia concilia geração limpa e conservação da biodiversidade?
+            </div>
+            <div class="tag-imagem">
+                <i class="fas fa-chart-pie"></i> [TABELA] Fontes energéticas e emissões: eólica (10gCO₂/kWh), carvão
+                (900gCO₂/kWh), gás (400g).
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj8XqoMQQrJmoR9IVBUCaaanDEElWu9OvIjVCMPLlxvx6EZBowNs-20ml6AucjCiaG6qIfLdOqCeO-qkCjU02o26vGU14-yJJEVcGawpn-F1afnw20PyBmwLYcY7N85L_8uFi71xMO_U53IvvHATeqMy11yzHvq9dTXGS8qP_SmMQrDjgtkebinD6Z6jCBN/s1536/ChatGPT%20Image%2012%20de%20fev.%20de%202026,%2021_10_16.png"
+                    alt="Tabela de emissões">
+            </div>
+            <div class="alternativas">
+                <div class="opcao" onclick="selecionarAlternativa(this, 4, 'A')"><i class="far fa-circle"></i> A)
+                    ampliar a altura das torres sem limites.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 4, 'B')"><i class="far fa-circle"></i> B)
+                    implementar sistemas de desligamento em picos migratórios e corredores ecológicos.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 4, 'C')"><i class="far fa-circle"></i> C)
+                    substituir por termelétrica a biomassa.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 4, 'D')"><i class="far fa-circle"></i> D) pintar
+                    as pás com cores fluorescentes.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 4, 'E')"><i class="far fa-circle"></i> E)
+                    instalar aerogeradores apenas em áreas urbanas.</div>
+            </div>
+        </div>
+
+        <!-- Q5 · MÚLTIPLA · FISIOLOGIA COMPARADA -->
+        <div class="questao-card" data-questao="5" data-tipo="me" data-gabarito="C" data-descritor="4.2">
+            <div class="numero-questao"><i class="fas fa-stethoscope"></i> QUESTÃO 05 · SAÚDE</div>
+            <div class="enunciado">
+                <strong>🫁 Fibrose cística e pâncreas</strong> – Pacientes com fibrose cística apresentam obstrução dos
+                ductos pancreáticos, reduzindo a secreção de enzimas no duodeno. Isso compromete principalmente a
+                digestão de:
+            </div>
+            <div class="tag-imagem">
+                <i class="fas fa-table"></i> [ESQUEMA] Pâncreas, ducto obstruído, alimentos não digeridos nas fezes
+                (esteatorreia).
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi72PqeLBpWHwcsrsVmiaIBEnxBM2DYUu2XhthrL9CJSqjAnIHJKkxuZDZGV_VJKRy8RJ5Pm8wS8VE4TotZ00LSXRkr1ToRtj1NSGOwt2xdCb10uEIZ2ZRs5sk1DunFpOTYP-eanbgtWptFivoqu012uBmnWhu5rIoAqBCPanCR-fhf9EXHdL-ZVdU-CItw/s450/ChatGPT%20Image%2012%20de%20fev.%20de%202026,%2021_24_45.png"
+                    alt="Esquema do pâncreas">
+            </div>
+            <div class="alternativas">
+                <div class="opcao" onclick="selecionarAlternativa(this, 5, 'A')"><i class="far fa-circle"></i> A)
+                    carboidratos, pela falta de amilase salivar.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 5, 'B')"><i class="far fa-circle"></i> B)
+                    proteínas, pela inibição da pepsina.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 5, 'C')"><i class="far fa-circle"></i> C)
+                    lipídios e proteínas, por deficiência de lipase, tripsina e quimotripsina.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 5, 'D')"><i class="far fa-circle"></i> D)
+                    lactose, pela ausência de lactase.</div>
+                <div class="opcao" onclick="selecionarAlternativa(this, 5, 'E')"><i class="far fa-circle"></i> E)
+                    celulose, pela falta de celulase.</div>
+            </div>
+        </div>
+
+        <!-- ========= QUESTÕES DISCURSIVAS ========= -->
+
+        <!-- Q6 · Discursiva · Ciclo do carbono -->
+        <div class="questao-card" data-questao="6" data-tipo="disc" data-descritor="1.3">
+            <div class="numero-questao"><i class="fas fa-tree"></i> QUESTÃO 06 · DISCURSIVA</div>
+            <div class="enunciado">
+                <strong>🌲 Amazônia: sumidouro de carbono?</strong> – Dados do INPE mostram que em 2025 a Amazônia
+                liberou mais carbono do que absorveu pela primeira vez, devido a queimadas e desmatamento. Explique, com
+                base no ciclo biogeoquímico do carbono, como a floresta amazônica atua no equilíbrio climático e por que
+                sua conversão em pastagem acelera o efeito estufa.
+            </div>
+            <div class="tag-imagem">
+                <i class="fas fa-globe-americas"></i> [INFOGRAFICO] Balanço de carbono: floresta madura estoque
+                400tC/ha; pastagem 120tC/ha; emissões por queima.
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjIh5KfNPgCpcH5sMwvXbX2YEwOL8LhvjvoRyFAl54CQYGmSXJzPcMvFBrXLEzIuYGustFTvFYxHVQ8zfHbulgpnowWk_kgHfVvM7a7WDc2WeLXrek3m6jXy38tgedPJSkFvW7cHOt7tOYPFWWqSLeRQb5cwONdjaU8Tt8LaX1kf9ClvwHzXXn7HSlqqr0F/s650/ChatGPT%20Image%2012%20de%20fev.%20de%202026,%2021_46_15.png"
+                    alt="Balanço de carbono">
+            </div>
+            <div class="discursiva-area">
+                <textarea id="resp6" placeholder="Desenvolva sua resposta com argumentos biogeoquímicos..."></textarea>
+            </div>
+        </div>
+
+        <!-- Q7 · Discursiva · Metabolismo energético -->
+        <div class="questao-card" data-questao="7" data-tipo="disc" data-descritor="2.6">
+            <div class="numero-questao"><i class="fas fa-beer"></i> QUESTÃO 07 · DISCURSIVA</div>
+            <div class="enunciado">
+                <strong>🍞 Fermentação: pão e cerveja</strong> – Leveduras (Saccharomyces cerevisiae) são fungos que, na
+                ausência de oxigênio, realizam fermentação alcoólica, produzindo etanol e CO₂. Na presença de O₂,
+                realizam respiração aeróbica. Compare o rendimento energético (ATP) e os produtos finais dos dois
+                processos. Por que a massa do pão cresce mesmo em ambiente com pouco oxigênio?
+            </div>
+            <div class="tag-imagem">
+                <i class="fas fa-microscope"></i> [SIMULADOR] Frascos com leveduras + açúcar: um aerado, outro selado –
+                produção de gás medida.
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh71XUJD2_eqOPDox284CzXoXnP1ewrp1xBMJU80YUtkSiJH6fyUgHrgcMfVeTLvee_aQPOuNendD3Jbtdnfbbv4gDykd8UxgXvgg6Oq4p_7h5Y4KNMuDEYX7pGoM7FVMsf4hLgDuSygQhIP0gf2i9D2DLZQuxI_ccVOGYNgwS6pNbzntsgx3Kg45F7c0lF/s1536/ChatGPT%20Image%2012%20de%20fev.%20de%202026,%2022_01_24.png"
+                    alt="Experimento fermentação">
+            </div>
+            <div class="discursiva-area">
+                <textarea id="resp7" placeholder="Responda comparando a eficiência e os produtos..."></textarea>
+            </div>
+        </div>
+
+        <!-- Q8 · Discursiva · Fisiologia humana -->
+        <div class="questao-card" data-questao="8" data-tipo="disc" data-descritor="4.2">
+            <div class="numero-questao"><i class="fas fa-fetus"></i> QUESTÃO 08 · DISCURSIVA</div>
+            <div class="enunciado">
+                <strong>⚠️ SAF – Síndrome Alcoólica Fetal</strong> – O consumo de bebidas alcoólicas durante a gestação
+                atravessa a barreira placentária e interfere na migração neuronal e formação do tubo neural. Descreva
+                como o etanol afeta o desenvolvimento do sistema nervoso central do feto e relacione com
+                comprometimentos cognitivos e comportamentais observados na infância.
+            </div>
+            <div class="tag-imagem">
+                <i class="fas fa-chart-line"></i> [GRÁFICO] Relação dose-resposta: consumo materno vs. escore de QI na
+                infância (correlação negativa).
+                <img src="https://chatgpt.com/s/m_698f29e9fbf8819181c6818b0b9c5bf9" alt="Gráfico SAF">
+            </div>
+            <div class="discursiva-area">
+                <textarea id="resp8" placeholder="Explique os mecanismos neurobiológicos..."></textarea>
+            </div>
+        </div>
+
+        <!-- Q9 · Discursiva · Alternativas energéticas -->
+        <div class="questao-card" data-questao="9" data-tipo="disc" data-descritor="1.9">
+            <div class="numero-questao"><i class="fas fa-solar-panel"></i> QUESTÃO 09 · DISCURSIVA</div>
+            <div class="enunciado">
+                <strong>⚡ Matriz elétrica brasileira</strong> – O etanol de cana-de-açúcar é apontado como alternativa
+                renovável. No entanto, seu cultivo demanda grandes extensões de terra, fertilizantes nitrogenados e
+                água. Construa um texto dissertativo comparando vantagens (balanço de CO₂, empregos) e impactos
+                ambientais (perda de biodiversidade, eutrofização) da produção de etanol em larga escala.
+            </div>
+            <div class="tag-imagem">
+                <i class="fas fa-tint"></i> [TABELA] Comparativo emissões (gCO₂/MJ): etanol cana (22), gasolina (94),
+                biodiesel (38).
+            </div>
+            <div class="discursiva-area">
+                <textarea id="resp9" placeholder="Apresente pontos positivos e negativos..."></textarea>
+            </div>
+        </div>
+
+        <!-- Q10 · Discursiva · Ciclos biogeoquímicos -->
+        <div class="questao-card" data-questao="10" data-tipo="disc" data-descritor="1.3">
+            <div class="numero-questao"><i class="fas fa-skull"></i> QUESTÃO 10 · DISCURSIVA</div>
+            <div class="enunciado">
+                <strong>💧 Água subterrânea contaminada</strong> – Em áreas agrícolas do aquífero Bauru, análises
+                apontam níveis de nitrato acima do permitido (10 mg/L N-NO₃). Essa contaminação está ligada a
+                fertilizantes nitrogenados. Relacione o ciclo do nitrogênio, o processo de lixiviação e os riscos à
+                saúde humana (metahemoglobinemia infantil) e ao ambiente (eutrofização).
+            </div>
+            <div class="tag-imagem"> <img src="https://chatgpt.com/s/m_698f29e9fbf8819181c6818b0b9c5bf9">
+                <i class="fas fa-map"></i> [MAPA] Aquífero Bauru, concentração de nitrato em poços profundos (tons de
+                vermelho).
+            </div>
+            <div class="discursiva-area">
+                <textarea id="resp10" placeholder="Articule os processos biogeoquímicos e os danos..."></textarea>
+            </div>
+        </div>
+
+        <!-- Botão de envio para Google Sheets -->
+        <button id="enviarBtn" class="btn-enviar" onclick="enviarRespostas()">
+            <i class="fas fa-paper-plane"></i> ENVIAR RESPOSTAS
+        </button>
+        <div id="msgStatus" class="rodape-msg"></div>
+    </div>
+
+    <script>
+        // -------------------------------------------------------------
+        // BANCO DE ALUNOS – FILTRADO (somente ATIVOS)
+        // -------------------------------------------------------------
+        const alunosAtivos = [
+            { numero: 1, nome: "ALAN EDUARDO DOS SANTOS BARBOSA", email: "0000111875511XSP@al.educacao.sp.gov.br" },
+            { numero: 2, nome: "KAUÃ BARBOSA VIEIRA", email: "00001128584487SP@al.educacao.sp.gov.br" },
+            { numero: 3, nome: "ALLYSSON OLIVEIRA VALES DOS SANTOS", email: "00001097403415SP@al.educacao.sp.gov.br" },
+            { numero: 4, nome: "ANA BEATRIZ DE LIMA TOMAZ", email: "00001132100719SP@al.educacao.sp.gov.br" },
+            { numero: 5, nome: "ANA BEATRIZ MOURA AMARO OLIVEIRA", email: "00001102123821SP@al.educacao.sp.gov.br" },
+            { numero: 6, nome: "ANDRÉ DOS REIS ARAÚJO", email: "00001118801192SP@al.educacao.sp.gov.br" },
+            { numero: 7, nome: "ARTUR SANTOS DE OLIVEIRA", email: "00001132217027SP@al.educacao.sp.gov.br" },
+            { numero: 8, nome: "CATHARINA KESS RUBIO MENDES", email: "00001150222815SP@al.educacao.sp.gov.br" },
+            { numero: 9, nome: "DANIEL FERREIRA DOS SANTOS", email: "00001122226202SP@al.educacao.sp.gov.br" },
+            { numero: 10, nome: "DAVÍ ALMEIDA LIMA", email: "00001132041739SP@al.educacao.sp.gov.br" },
+            { numero: 11, nome: "EMYLE KAMYLI MARIANO DE SOUSA", email: "00001127998456SP@al.educacao.sp.gov.br" },
+            { numero: 12, nome: "ERIK TAVARES AUGUSTO", email: "0000110062207XSP@al.educacao.sp.gov.br" },
+            { numero: 13, nome: "GEOVANNA DOS SANTOS MENDES", email: "00001141647837SP@al.educacao.sp.gov.br" },
+            { numero: 14, nome: "HENRY ALVES TOZZI DA SILVA PIRES", email: "00001132181409SP@al.educacao.sp.gov.br" },
+            { numero: 15, nome: "JENNIFER CARVALHO COSTA", email: "00001141609083SP@al.educacao.sp.gov.br" },
+            { numero: 16, nome: "JUHAN DOS SANTOS MARIN", email: "0000114240559XSP@al.educacao.sp.gov.br" },
+            { numero: 17, nome: "JULIANA SILVA DE LIMA NEVES", email: "00001117723872SP@al.educacao.sp.gov.br" },
+            // { numero: 18, nome: "KAIQUE VILLA VICENTE DA SILVA", email: "00001132037700SP@al.educacao.sp.gov.br", situacao: "TRANSFERIDO" }, // IGNORADO
+            { numero: 19, nome: "LEONARDO LIMA DE JESUS", email: "00001122106014SP@al.educacao.sp.gov.br" },
+            { numero: 20, nome: "MARIAH LUIZA DO NASCIMENTO CARVALHO", email: "00001141562467SP@al.educacao.sp.gov.br" },
+            { numero: 21, nome: "MATHEUS ELIAS HADDAD DOS SANTOS", email: "00001141438203SP@al.educacao.sp.gov.br" },
+            { numero: 22, nome: "MURILO GABRIEL RIOS LEAO", email: "00001122260210SP@al.educacao.sp.gov.br" },
+            { numero: 23, nome: "NATAN SANTOS XAVIER", email: "00001122198802SP@al.educacao.sp.gov.br" },
+            { numero: 24, nome: "NICOLAS ANTUNES MATOS", email: "00001122281018SP@al.educacao.sp.gov.br" },
+            { numero: 25, nome: "NICOLE PEREIRA LUCIANO", email: "00001132135618SP@al.educacao.sp.gov.br" },
+            { numero: 26, nome: "PIETRO COELHO MARTINS", email: "00001151100377SP@al.educacao.sp.gov.br" },
+            { numero: 27, nome: "PYETRO FERREIRA CABRAL", email: "00001141662085SP@al.educacao.sp.gov.br" },
+            { numero: 28, nome: "RAPHAEL DA SILVA TAVARES", email: "00001150835709SP@al.educacao.sp.gov.br" },
+            { numero: 29, nome: "VICTOR DANIEL GARCIA SANCHEZ", email: "00001210007927SP@al.educacao.sp.gov.br" },
+            { numero: 30, nome: "VITOR AMARAL CONCEIÇÃO", email: "00001132199542SP@al.educacao.sp.gov.br" },
+            { numero: 31, nome: "VITOR HUGO SILVA RIO BRANCO", email: "00001132099833SP@al.educacao.sp.gov.br" },
+            { numero: 32, nome: "VITOR VINICIUS PEREIRA VASCONCELOS", email: "00001103353871SP@al.educacao.sp.gov.br" },
+            { numero: 33, nome: "VITORIA ALVES DA SILVA", email: "00001223459184SP@al.educacao.sp.gov.br" },
+            { numero: 34, nome: "FELIPE AUGUSTO DE SOUZA ALCARAZ", email: "00001126006403SP@al.educacao.sp.gov.br" },
+            { numero: 35, nome: "JULIA ARAUJO DE LIMA", email: "00001117221118SP@al.educacao.sp.gov.br" },
+            { numero: 36, nome: "PATRYCK SALES RODRIGUES", email: "00001137815498SP@al.educacao.sp.gov.br" },
+            { numero: 37, nome: "ANNY LUIZA MARQUES DE SOUZA", email: "00001117945509SP@al.educacao.sp.gov.br" }
+        ];
+
+        // Preencher dropdown com nomes
+        const selectEl = document.getElementById('alunoSelect');
+        alunosAtivos.forEach(aluno => {
+            let opt = document.createElement('option');
+            opt.value = aluno.numero;
+            opt.textContent = `${aluno.numero} · ${aluno.nome}`;
+            selectEl.appendChild(opt);
+        });
+
+        // Função para carregar dados do aluno selecionado
+        function carregarDadosAluno() {
+            let numSelecionado = document.getElementById('alunoSelect').value;
+            if (!numSelecionado) {
+                document.getElementById('campoNumero').innerHTML = 'N°: --';
+                document.getElementById('campoEmail').innerHTML = '<i class="fas fa-envelope"></i> e-mail institucional';
+                return;
+            }
+            let aluno = alunosAtivos.find(a => a.numero == numSelecionado);
+            if (aluno) {
+                document.getElementById('campoNumero').innerHTML = `N°: ${aluno.numero}`;
+                document.getElementById('campoEmail').innerHTML = `<i class="fas fa-envelope"></i> ${aluno.email}`;
+            }
+        }
+
+        // -------------------------------------------------------------
+        // FUNÇÕES DE SELEÇÃO DE ALTERNATIVAS
+        // -------------------------------------------------------------
+        function selecionarAlternativa(elemento, numQuestao, letra) {
+            let container = elemento.closest('.alternativas');
+            if (!container) return;
+            let opcoes = container.querySelectorAll('.opcao');
+            opcoes.forEach(op => op.classList.remove('selecionada'));
+            elemento.classList.add('selecionada');
+            // armazena resposta
+            let qCard = elemento.closest('.questao-card');
+            qCard.setAttribute('data-resp-aluno', letra);
+        }
+
+        // URL DO SEU GOOGLE APPS SCRIPT (Substitua após publicar como Web App)
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxjz8FZnuWSAoADUctSe72T-Dc4BR0j3fgDzVAF-knmeJW6MZ_HBO4CMIKME-R88rA/exec';
+
+        function enviarRespostas() {
+            let alunoId = document.getElementById('alunoSelect').value;
+            if (!alunoId) {
+                document.getElementById('msgStatus').innerHTML = '⚠️ Selecione seu nome no cabeçalho!';
+                return;
+            }
+
+            let aluno = alunosAtivos.find(a => a.numero == alunoId);
+
+            // Desabilitar botão
+            const btn = document.getElementById('enviarBtn');
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
+            document.getElementById('msgStatus').innerHTML = '📤 Enviando respostas...';
+
+            // Coletar respostas em um array organizado (Q1-Q10)
+            let questoes = document.querySelectorAll('.questao-card');
+            let respostas_array = [];
+
+            questoes.forEach((q) => {
+                let tipo = q.getAttribute('data-tipo');
+                if (tipo === 'me') {
+                    let selecionada = q.querySelector('.opcao.selecionada');
+                    respostas_array.push(selecionada ? selecionada.innerText.trim().charAt(0) : '-');
+                } else {
+                    let textarea = q.querySelector('textarea');
+                    respostas_array.push(textarea ? textarea.value.trim() : '');
+                }
+            });
+
+            let payload = {
+                aluno_nome: aluno.nome,
+                respostas_array: respostas_array
+            };
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Necessário para GAS
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(response => {
+                    // Tentar ler o JSON se não estiver em modo no-cors (mas no GAS geralmente ficamos cegos no no-cors)
+                    document.getElementById('msgStatus').innerHTML = '✅ Respostas enviadas com sucesso! A IA está processando sua nota na planilha.';
+                    btn.innerHTML = '<i class="fas fa-check"></i> ENVIADO';
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById('msgStatus').innerHTML = '❌ Erro ao enviar. Tente novamente.';
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                });
+        }
+    </script>
+
+
+</body>
+
+</html>
