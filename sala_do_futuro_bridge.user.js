@@ -4,7 +4,7 @@
 // @version      1.0
 // @description  Importa notas da Planilha de Biologia para a Sala do Futuro
 // @author       Antigravity AI
-// @match        https://saladofuturoprofessor.educacao.sp.gov.br/diario-classe__avalicao__lancamento*
+// @match        https://saladofuturoprofessor.educacao.sp.gov.br/diario-classe__avalicao__*
 // @grant        GM_xmlhttpRequest
 // @connect      script.google.com
 // @connect      script.googleusercontent.com
@@ -69,22 +69,37 @@
 
         // Localizar linhas da tabela de alunos (ajustar conforme o DOM real da Sala do Futuro)
         // Baseado na estrutura comum dessas plataformas:
-        const rows = document.querySelectorAll('tr, .student-row, div[role="row"]');
+        const rows = document.querySelectorAll('tr, .student-row, [role="row"]');
         let count = 0;
 
+        console.log(`Buscando em ${rows.length} linhas...`);
+
         rows.forEach(row => {
-            const text = row.innerText || "";
-            // Tentar encontrar um nome na linha que coincida com a nossa planilha
+            const rowText = normalizeText(row.innerText || "");
+
             for (let name in gradeMap) {
-                if (normalizeText(text).includes(name)) {
-                    const input = row.querySelector('input[type="number"], input.grade-input, input[role="textbox"]');
+                // Verificação mais precisa do nome dentro da linha
+                if (rowText.includes(name)) {
+                    console.log(`Compatibilidade encontrada: ${name}`);
+                    // Busca por diversos tipos de input possíveis
+                    const input = row.querySelector('input[type="number"], input.grade-input, input[role="textbox"], .nota-input');
                     if (input) {
-                        input.value = gradeMap[name].toString().replace('.', ',');
-                        input.dispatchEvent(new Event('input', { bubbles: true }));
-                        input.dispatchEvent(new Event('change', { bubbles: true }));
-                        input.style.backgroundColor = '#e2ffd6';
-                        count++;
+                        const originalValue = input.value;
+                        const newValue = gradeMap[name].toString().replace('.', ',');
+
+                        if (originalValue !== newValue) {
+                            input.value = newValue;
+                            // Disparar eventos para que o sistema da Sala do Futuro detecte a mudança
+                            ['input', 'change', 'blur'].forEach(evtName => {
+                                input.dispatchEvent(new Event(evtName, { bubbles: true }));
+                            });
+                            input.style.backgroundColor = '#e2ffd6';
+                            input.style.border = '2px solid #28a745';
+                            count++;
+                        }
                         break;
+                    } else {
+                        console.warn(`Nome ${name} achado, mas input não encontrado na linha.`);
                     }
                 }
             }
