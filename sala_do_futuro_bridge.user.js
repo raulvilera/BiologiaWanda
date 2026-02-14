@@ -14,7 +14,7 @@
     'use strict';
 
     // CONFIGURAÇÃO - URL do seu Google Apps Script
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxjz8FZnuWSAoADUctSe72T-Dc4BR0j3fgDzVAF-knmeJW6MZ_HBO4CMIKME-R88rA/exec?action=getGrades';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwhwwN92DGIOLLMI4MPyPin6KKEAjpxjx1dodyEJrAOknlcTCfjijV32vb89ZRcTG4/exec?action=getGrades';
 
     function addImportButton() {
         if (document.getElementById('btn-importar-planilha')) return;
